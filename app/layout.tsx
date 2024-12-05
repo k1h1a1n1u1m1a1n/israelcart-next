@@ -20,6 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+    <meta name="robots" content="noindex"/>
     <body
       className={`${montserrat.className}`}
     >
@@ -27,7 +28,7 @@ export default function RootLayout({
 
       <Header/>
       {children}
-      <Footer />
+      <Footer/>
     </div>
     </body>
     </html>
