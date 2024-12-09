@@ -1,10 +1,11 @@
 import React, {FC} from 'react';
 import Image from "next/image";
 import Link from "next/link";
-import {IProductCard} from "@/types/data";
+import {IProductSimple} from "@/types/data";
+import AddToCard from "@/components/common/AddToCard";
 
 type Props = {
-  product: IProductCard;
+  product: IProductSimple;
 }
 
 const ProductCard: FC<Props> = ({product}) => {
@@ -21,7 +22,7 @@ const ProductCard: FC<Props> = ({product}) => {
                   width={267}
                   height={165}
                   src={product.image}
-                  />
+                />
               </Link></div>
           </div>
         </div>
@@ -34,7 +35,7 @@ const ProductCard: FC<Props> = ({product}) => {
           </button>
         </div>
         <div className="attributes"><span className="_top-deals">Up to 50% OFF</span><span
-          className="_volume">2000 ml</span><span className="_producer">Yaakov Hanman</span><span
+          className="_volume">2000 ml</span><span className="_producer">{product.producer}</span><span
           className="_lifestyle-diet">100 % natural</span><span className="_lifestyle-diet">Vegan</span><span
           className="_lifestyle-diet">Kosher for Passover</span><span className="_lifestyle-diet">Kosher</span><span
           className="_kosher-for-passover">Yes</span></div>
@@ -78,17 +79,7 @@ const ProductCard: FC<Props> = ({product}) => {
         </div>
         <div className="item__action_wrap">
           <div className="item__action_buttons">
-            <div className="product__add_to_cart template-qty-right" data-add_to_cart_wrap_product_id="20230">
-              <div className="product_wrap product_simple in_stock" data-product_id="20230" data-product_cart_key="">
-                <div className="button_default button_add" data-add_to_cart="" data-ga4-type="type_add_to_cart"><span
-                  className="label">Add to cart</span></div>
-                <div className="button_default button_view_cart" data-view_cart="" data-js-open-mini-cart=""><span
-                  className="label">View cart</span></div>
-                <div className="qty"><span data-qty_minus=""><i className="lh-icon-angle-left-light"></i></span><input
-                  type="number" min="0" defaultValue="1" max="41" data-qty_input=""/><span data-qty_plus=""><i
-                  className="lh-icon-angle-right-light"></i></span></div>
-              </div>
-            </div>
+            <AddToCard product={product}/>
             <div className="item__wishlist_wrap">
               <div className="product_add_to_favorite">
                 <button data-favorite_list-disable="" data-favorite_list-added="0" data-type="favorites"

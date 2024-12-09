@@ -1,9 +1,9 @@
-import {IProductCard} from "@/types/data";
+import {IProductSimple} from "@/types/data";
 import Tabs from "@/components/common/featured-products/Tabs";
 
 async function getRecommendedProducts() {
   const response = await fetch('https://rc.israelcart.com/wp-json/next/get-featured-products');
-  const products: IProductCard[] = await response.json();
+  const products: IProductSimple[] = await response.json();
   return products;
 }
 

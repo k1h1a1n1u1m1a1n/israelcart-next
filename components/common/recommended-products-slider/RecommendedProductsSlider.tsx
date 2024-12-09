@@ -3,13 +3,13 @@
 import React, {useState} from 'react';
 import {ButtonBack, ButtonNext, Carousel, Slide, Slider} from "react-scroll-snap-anime-slider";
 import ProductCard from "@/components/ui/product-card/ProductCard";
-import {IProductCard} from "@/types/data";
+import {IProductSimple} from "@/types/data";
 
 
 type Props = {
   title: string;
   buttonText?: string;
-  products: IProductCard[];
+  products: IProductSimple[];
 }
 
 const RecommendedProductsSlider: React.FC<Props> = ({title, buttonText, products}) => {

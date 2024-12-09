@@ -3,6 +3,7 @@ import Logo from "@/components/header/Logo";
 import TopMenu from "@/components/header/TopMenu";
 import Search from "@/components/header/Search";
 import Navigation from "@/components/header/Navigation";
+import Cart from "@/components/header/Cart";
 
 export default function Header() {
   return (
@@ -20,46 +21,8 @@ export default function Header() {
                   <div className="header__middle">
                     <Search/>
 
-                    <div className="mini_cart_wrap">
-                      <div className="widget_shopping_cart_content">
-                        <div className="header-mini_cart">
-                          <div className="your-cart mini-cart__trigger empty" data-js-check-empty-cart=""
-                               data-js-open-mini-cart="">
-                            <div className="tooltip">Your cart</div>
-                            <div className="mini_cart__icons">
-                              <i className="mini-cart-icon"></i>
-                            </div>
+                    <Cart/>
 
-                            <div className="mini_cart__count">
-                            </div>
-
-                            <div className="info">
-                              <div className="text-1">
-                                Cart
-                              </div>
-                              <div className="text-2">
-                                items
-                              </div>
-                            </div>
-                          </div>
-                          <div className="mini-cart__wrapper" data-js-mini-cart-wrapper="">
-                            <div className="mini-cart">
-                              <div data-js-cart-loader="" className="global-loader absolute"><span
-                                className="loader"></span></div>
-                              <div className="woocommerce-mini-cart">
-                                <div className="mini-cart__title">
-                                  Shopping cart <div className="mini-cart__close" data-js-close-mini-cart="">
-                                  <i className="lh-icon-times-light"></i>
-                                </div>
-                                </div>
-                                <p className="mini-cart__empty-message">
-                                  No products in the cart. </p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -78,46 +41,7 @@ export default function Header() {
                         className="header__mobile_menu"></button>
                 <Logo/>
 
-                <div className="mini_cart_wrap">
-                  <div className="widget_shopping_cart_content">
-                    <div className="header-mini_cart">
-                      <div className="your-cart mini-cart__trigger empty" data-js-check-empty-cart=""
-                           data-js-open-mini-cart="">
-                        <div className="tooltip">Your cart</div>
-                        <div className="mini_cart__icons">
-                          <i className="mini-cart-icon"></i>
-                        </div>
-
-                        <div className="mini_cart__count">
-                        </div>
-
-                        <div className="info">
-                          <div className="text-1">
-                            Cart
-                          </div>
-                          <div className="text-2">
-                            items
-                          </div>
-                        </div>
-                      </div>
-                      <div className="mini-cart__wrapper" data-js-mini-cart-wrapper="">
-                        <div className="mini-cart">
-                          <div data-js-cart-loader="" className="global-loader absolute"><span
-                            className="loader"></span></div>
-                          <div className="woocommerce-mini-cart">
-                            <div className="mini-cart__title">
-                              Shopping cart <div className="mini-cart__close" data-js-close-mini-cart="">
-                              <i className="lh-icon-times-light"></i>
-                            </div>
-                            </div>
-                            <p className="mini-cart__empty-message">
-                              No products in the cart. </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <Cart/>
               </div>
               <div className="main_menu">
                 <div data-js-menu="menu-bottom">

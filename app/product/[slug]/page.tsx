@@ -3,9 +3,10 @@ import '../single-product.css'
 import Breadcrumbs from "@/components/single-product/Breadcrumbs";
 import Link from "next/link";
 import RecommendedProductsSlider from "@/components/common/recommended-products-slider/RecommendedProductsSlider";
-import {IProduct, IProductCard} from "@/types/data";
+import {IProduct, IProductSimple} from "@/types/data";
 import Gallery from "@/components/single-product/Gallery";
 import Image from "next/image";
+import AddToCard from "@/components/common/AddToCard";
 
 
 async function getProduct(slug: string) {
@@ -16,7 +17,7 @@ async function getProduct(slug: string) {
 
 async function getRelatedProducts(slug: string) {
   const res = await fetch('https://rc.israelcart.com/wp-json/next/get-related-products?slug=' + slug);
-  const products: IProductCard[] = await res.json()
+  const products: IProductSimple[] = await res.json()
   return products
 }
 
@@ -29,7 +30,20 @@ export async function generateStaticParams() {
 export default async function SingleProduct({params,}: { params: Promise<{ slug: string }> }) {
   const slug = (await params).slug
   const product: IProduct = await getProduct(slug);
-  const relatedProducts: IProductCard[] = await getRelatedProducts(slug);
+  const relatedProducts: IProductSimple[] = await getRelatedProducts(slug);
+
+  const simpleProduct = {
+    slug: product.slug,
+    price: product.price,
+    max_add_to_card: 10,
+    id: product.id,
+    title: product.title,
+    image: product.image,
+    markers: product.markers,
+    min_add_to_card: 1,
+    producer: product.producer,
+    producer_url: product.producer_url,
+  };
 
   return (
     <div className={'col-full'}>
@@ -54,20 +68,8 @@ export default async function SingleProduct({params,}: { params: Promise<{ slug:
             </div>
             <div className="product__buy_block">
               <div className="product__add_to_cart_wrap">
-                <div className="product__add_to_cart template-qty-left">
-                  <div className="product_wrap product_simple in_stock">
-                    <div className="button_default button_add">
-                      <span className="label">Add to cart</span></div>
-                    <div className="button_default button_view_cart">
-                      <span className="label">View cart</span>
-                    </div>
-                    <div className="qty">
-                      <span data-qty_minus=""><i className="lh-icon-angle-left-light"></i></span>
-                      <input type="number" min="0" defaultValue="1" max="41" data-qty_input=""/>
-                      <span data-qty_plus=""><i className="lh-icon-angle-right-light"></i></span>
-                    </div>
-                  </div>
-                </div>
+                <AddToCard quantitySide={'left'} product={simpleProduct}/>
+
                 <div className="item__wishlist_wrap">
                   <div className="product_add_to_favorite">
                     <button data-favorite_list-added="0" data-type="favorites">
@@ -424,28 +426,16 @@ export default async function SingleProduct({params,}: { params: Promise<{ slug:
                 className="price_amount" data-js-price_amount="">{product.price}</span></div>
 
             </div>
-            <div className="product__buy_block" data-product-list-name="Product page"
-                 data-product-list-id="product_page">
+            <div className="product__buy_block">
               <div className="product__add_to_cart_wrap">
-                <div className="product__add_to_cart template-qty-left" data-add_to_cart_wrap_product_id="20230">
-                  <div className="product_wrap product_simple in_stock" data-product_id="20230"
-                       data-product_cart_key="">
-                    <div className="button_default button_add" data-add_to_cart="" data-ga4-type="type_add_to_cart">
-                      <span className="label">Add to cart</span></div>
-                    <div className="button_default button_view_cart" data-view_cart="" data-js-open-mini-cart="">
-                      <span className="label">View cart</span>
-                    </div>
-                    <div className="qty">
-                      <span data-qty_minus=""><i className="lh-icon-angle-left-light"></i></span>
-                      <input type="number" min="0" defaultValue="1" max="41" data-qty_input=""/>
-                      <span data-qty_plus=""><i className="lh-icon-angle-right-light"></i></span>
-                    </div>
-                  </div>
-                </div>
+
+
+                <AddToCard quantitySide={'left'} product={simpleProduct}/>
+
+
                 <div className="item__wishlist_wrap">
                   <div className="product_add_to_favorite">
-                    <button data-favorite_list-disable="" data-favorite_list-added="0" data-type="favorites"
-                            data-ga4-type="type_add_to_wishlist">
+                    <button data-type="favorites">
                       <div className="button__icon icon__add"><i className="lh-icon-heart-regular"></i></div>
                     </button>
                     <div className="button__popup tooltip-shift_left">You are not logged in, so you cannot add items
@@ -491,7 +481,7 @@ export default async function SingleProduct({params,}: { params: Promise<{ slug:
             </div>
           </div>
           <div className="single_product__sticky_card_wrap stick-bottom" data-sticky-card=""
-               style={{paddingTop: '172px'}}>
+               style={{paddingTop: '12px'}}>
             <div className="single_product__sticky_card">
               <div className="thumbnail_wrap ">
                 <Image src={product.image} width={356} height={265} alt={product.title}/>
@@ -504,21 +494,8 @@ export default async function SingleProduct({params,}: { params: Promise<{ slug:
               <div className="product__buy_block" data-product-list-name="Product page"
                    data-product-list-id="product_page">
                 <div className="product__add_to_cart_wrap">
-                  <div className="product__add_to_cart template-qty-left" data-add_to_cart_wrap_product_id="20230">
-                    <div className="product_wrap product_simple in_stock" data-product_id="20230"
-                         data-product_cart_key="">
-                      <div className="button_default button_add" data-add_to_cart="" data-ga4-type="type_add_to_cart">
-                        <span className="label">Add to cart</span></div>
-                      <div className="button_default button_view_cart" data-view_cart="" data-js-open-mini-cart="">
-                        <span className="label">View cart</span>
-                      </div>
-                      <div className="qty">
-                        <span data-qty_minus=""><i className="lh-icon-angle-left-light"></i></span>
-                        <input type="number" min="0" defaultValue="1" max="41" data-qty_input=""/>
-                        <span data-qty_plus=""><i className="lh-icon-angle-right-light"></i></span>
-                      </div>
-                    </div>
-                  </div>
+                  <AddToCard quantitySide={'left'} product={simpleProduct}/>
+
                   <div className="item__wishlist_wrap">
                     <div className="product_add_to_favorite">
                       <button data-favorite_list-disable="" data-favorite_list-added="0" data-type="favorites"

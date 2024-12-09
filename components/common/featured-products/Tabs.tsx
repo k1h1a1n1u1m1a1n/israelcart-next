@@ -2,10 +2,10 @@
 import React, {FC, useState} from 'react';
 import {ButtonBack, ButtonNext, Carousel, Slide, Slider} from "react-scroll-snap-anime-slider";
 import ProductCard from "@/components/ui/product-card/ProductCard";
-import {IProductCard} from "@/types/data";
+import {IProductSimple} from "@/types/data";
 
 type Props = {
-  recommendedProducts: IProductCard[];
+  recommendedProducts: IProductSimple[];
 }
 
 const Tabs: FC<Props> = ({recommendedProducts}) => {

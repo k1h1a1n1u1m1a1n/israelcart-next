@@ -1,4 +1,4 @@
-export interface IProductCard {
+export interface IProductSimple {
   id: number;
   slug: string;
   title: string;
@@ -7,6 +7,8 @@ export interface IProductCard {
   markers: string[];
   producer: string;
   producer_url: string;
+  max_add_to_card: number;
+  min_add_to_card: number;
 }
 
 export interface IProduct {
