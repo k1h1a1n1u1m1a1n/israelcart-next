@@ -6569,10 +6569,12 @@ body.mini-cart-open {
 
 @media screen and (max-width: 767px) {
     .featured_products .featured_products__inner {
-        padding-top: 26px;
+        padding: 26px;
     }
     .featured_products .featured_products__inner {
         width: 100%;
+        margin-left: 0;
+        margin-right: 0;
     }
 }
 
@@ -7047,8 +7049,9 @@ body.mini-cart-open {
 
 @media screen and (max-width: 767px) {
     .main-categories .main-categories__inner {
-        padding-top: 25px;
-        padding-bottom: 25px;
+        padding: 25px;
+        margin-left: 0;
+        margin-right: 0;
     }
 }
 

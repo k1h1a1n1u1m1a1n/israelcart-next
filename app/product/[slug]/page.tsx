@@ -72,7 +72,7 @@ export default async function SingleProduct({params,}: { params: Promise<{ slug:
 
                 <div className="item__wishlist_wrap">
                   <div className="product_add_to_favorite">
-                    <button data-favorite_list-added="0" data-type="favorites">
+                    <button data-favorite_list-added="0" data-type="favorites" data-favorite_list-disable>
                       <div className="button__icon icon__add"><i className="lh-icon-heart-regular"></i></div>
                     </button>
                     <div className="button__popup tooltip-shift_right tooltip-shift_bottom">You are not logged in, so
@@ -435,7 +435,7 @@ export default async function SingleProduct({params,}: { params: Promise<{ slug:
 
                 <div className="item__wishlist_wrap">
                   <div className="product_add_to_favorite">
-                    <button data-type="favorites">
+                    <button data-type="favorites" data-favorite_list-disable>
                       <div className="button__icon icon__add"><i className="lh-icon-heart-regular"></i></div>
                     </button>
                     <div className="button__popup tooltip-shift_left">You are not logged in, so you cannot add items

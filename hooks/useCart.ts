@@ -36,7 +36,12 @@ interface CartState {
   openCart: () => void;
   closeCart: () => void;
   syncCart: () => void;
+  debouncedSyncCart: () => void;
 }
+
+let debounceTimeout: NodeJS.Timeout | null = null;
+let abortController: AbortController | null = null;
+
 
 const useCart = create<CartState>()(
   persist(
@@ -92,7 +97,7 @@ const useCart = create<CartState>()(
             ),
           };
         })
-        useCart.getState().syncCart();
+        useCart.getState().debouncedSyncCart();
       },
 
       // Clear the cart
@@ -112,6 +117,9 @@ const useCart = create<CartState>()(
       },
 
       syncCart: async () => {
+        if (abortController) abortController.abort();
+        abortController = new AbortController();
+
         set(() => ({isSyncing: true}));
 
         const data = {cart: useCart.getState().userItems};
@@ -121,6 +129,7 @@ const useCart = create<CartState>()(
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(data),
+          signal: abortController.signal,
         });
 
         type Response = {
@@ -143,6 +152,13 @@ const useCart = create<CartState>()(
         };
 
         set(() => (updateData));
+      },
+
+      debouncedSyncCart: () => {
+        if (debounceTimeout) clearTimeout(debounceTimeout);
+        debounceTimeout = setTimeout(() => {
+          useCart.getState().syncCart();
+        }, 300); // 300ms debounce
       },
     }),
     {
