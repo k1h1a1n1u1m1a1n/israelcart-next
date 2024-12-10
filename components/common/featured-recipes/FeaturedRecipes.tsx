@@ -39,7 +39,7 @@ export default function FeaturedRecipes() {
         <div className="title_block"><a href="/recipes/">Recipes</a></div>
 
         <div data-items="recipes">
-          <Carousel totalSlides={recipes.length} visibleSlides={visibleSlides}>
+          <Carousel draggable={false} totalSlides={recipes.length} visibleSlides={visibleSlides}>
             <Slider>
               {recipes.map((product, index) => (
                 <Slide

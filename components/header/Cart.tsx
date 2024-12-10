@@ -131,12 +131,12 @@ const CartContent = () => {
 }
 
 const CartItem: FC<{ item: ICartItem }> = ({item}) => {
-  const {removeItem, closeCart, updateQuantity} = useCart();
+  const {removeItem, closeCart, updateQuantity, items} = useCart();
   const [quantity, setQuantity] = useState(item.quantity);
 
   useEffect(() => {
     setQuantity(item.quantity);
-  }, [item.quantity]);
+  }, [items]);
 
   const onQuantityChange = (newQuantity: number) => {
     setQuantity(newQuantity);

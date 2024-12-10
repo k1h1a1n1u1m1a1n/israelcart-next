@@ -23,7 +23,8 @@ const ProductCard: FC<Props> = ({product}) => {
                   height={165}
                   src={product.image}
                 />
-              </Link></div>
+              </Link>
+            </div>
           </div>
         </div>
         <div className="product_left_markers"></div>
