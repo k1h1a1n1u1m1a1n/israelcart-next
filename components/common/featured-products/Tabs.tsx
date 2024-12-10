@@ -2,7 +2,6 @@
 import React, {ComponentPropsWithRef, FC, useCallback, useEffect, useState} from 'react';
 import ProductCard from "@/components/ui/product-card/ProductCard";
 import {IProductSimple} from "@/types/data";
-import 'react-slidy/lib/index.scss';
 import useEmblaCarousel from "embla-carousel-react";
 
 type Props = {
