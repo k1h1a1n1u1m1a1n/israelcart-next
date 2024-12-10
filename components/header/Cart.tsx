@@ -62,7 +62,7 @@ const Cart: FC = () => {
 };
 
 const CartContent = () => {
-  const {items, total, recommendedProducts, closeCart, addItem} = useCart();
+  const {items, subtotal, recommendedProducts, closeCart, addItem} = useCart();
 
   return (
     <>
@@ -77,7 +77,7 @@ const CartContent = () => {
           <div className="subtotal__price">
             <div className="subtotal__price__main ">
               <span className="woocommerce-Price-currencySymbol">$</span>
-              <span className="price_amount">{total}</span>
+              <span className="price_amount">{subtotal}</span>
             </div>
           </div>
         </div>
