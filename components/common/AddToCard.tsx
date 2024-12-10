@@ -58,9 +58,6 @@ type QuantityProps = {
 }
 
 const Quantity: FC<QuantityProps> = ({product, quantity, setQuantity}) => {
-
-  // const {updateQuantity, userItems} = useCart();
-  // const cartItem = userItems.find((i) => i.id === product.id);
   return (
     <div className="qty">
       <span data-qty_minus onClick={() => setQuantity(Math.max(quantity - 1, 1))}>

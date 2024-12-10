@@ -1,6 +1,6 @@
 'use client'
 
-import React, {FC} from 'react'
+import React, {FC, useEffect, useState} from 'react'
 import useCart, {ICartItem} from "@/hooks/useCart";
 import Link from "next/link";
 import Image from "next/image";
@@ -85,7 +85,6 @@ const CartContent = () => {
           <a href="https://rc.israelcart.com/checkout/" className="button mini-cart__checkout-button ripple">
             Continue to Checkout</a>
         </div>
-
       </div>
 
       <div className="cart-recommended" data-mini-cart-list-recommended="">
@@ -94,28 +93,30 @@ const CartContent = () => {
         </div>
 
         {recommendedProducts.map(product => (
-        <div key={product.id} className="recommended-item">
-          <div className="product type-product post-17912">
-            <Link href={`/product/${product.slug}`} onClick={closeCart} className="product__image">
-              <Image src={product.image} width={150} height={150} alt={product.title}/>
-            </Link>
-            <div className="product__content">
-              <div className="product__title">
-                <Link href={`/product/${product.slug}`} className="item__title" onClick={closeCart}>
-                  {product.title}
-                </Link>
-              </div>
-              <div className="product__footer">
-                <div className="product__price cart-product-price">
-                  <div className="regular_price">
-                    <span className="woocommerce-Price-currencySymbol">$</span>
-                    <span className="price_amount">{product.price}</span></div>
+          <div key={product.id} className="recommended-item">
+            <div className="product type-product post-17912">
+              <Link href={`/product/${product.slug}`} onClick={closeCart} className="product__image">
+                <Image src={product.image} width={150} height={150} alt={product.title}/>
+              </Link>
+              <div className="product__content">
+                <div className="product__title">
+                  <Link href={`/product/${product.slug}`} className="item__title" onClick={closeCart}>
+                    {product.title}
+                  </Link>
                 </div>
-                <div className="item__action_wrap">
-                  <div className="product__add_to_cart">
-                    <div className="product_wrap product_simple in_stock">
-                      <div className="button_default button_add" onClick={() => addItem({id: product.id, quantity: 1})}>
-                        <span className="label">Add to cart</span>
+                <div className="product__footer">
+                  <div className="product__price cart-product-price">
+                    <div className="regular_price">
+                      <span className="woocommerce-Price-currencySymbol">$</span>
+                      <span className="price_amount">{product.price}</span></div>
+                  </div>
+                  <div className="item__action_wrap">
+                    <div className="product__add_to_cart">
+                      <div className="product_wrap product_simple in_stock">
+                        <div className="button_default button_add"
+                             onClick={() => addItem({id: product.id, quantity: 1})}>
+                          <span className="label">Add to cart</span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -123,7 +124,6 @@ const CartContent = () => {
               </div>
             </div>
           </div>
-        </div>
         ))}
       </div>
     </>
@@ -131,7 +131,17 @@ const CartContent = () => {
 }
 
 const CartItem: FC<{ item: ICartItem }> = ({item}) => {
-  const {removeItem, closeCart} = useCart();
+  const {removeItem, closeCart, updateQuantity} = useCart();
+  const [quantity, setQuantity] = useState(item.quantity);
+
+  useEffect(() => {
+    setQuantity(item.quantity);
+  }, [item.quantity]);
+
+  const onQuantityChange = (newQuantity: number) => {
+    setQuantity(newQuantity);
+    updateQuantity(item.id, newQuantity);
+  }
 
   return (
     <div className="cart-item mini_cart_item">
@@ -158,12 +168,15 @@ const CartItem: FC<{ item: ICartItem }> = ({item}) => {
             <div className="quantity-wrap ">
               <div
                 className="product__qty_for_cart quantity-dropdown-show product__is_allow_to_order product__is_in_stock">
-
                 <div>
                   <div className="qty">
-                    <span><i className="lh-icon-angle-left-light"></i></span>
-                    <input type="number" min="0" value={item.quantity} max="41"/>
-                    <span><i className="lh-icon-angle-right-light"></i></span>
+                    <span onClick={() => onQuantityChange(Math.max(quantity - 1, 1))}>
+                      <i className="lh-icon-angle-left-light"></i>
+                    </span>
+                    <input type="number" min="0" value={quantity} max="41"/>
+                    <span onClick={() => onQuantityChange(quantity + 1)}>
+                      <i className="lh-icon-angle-right-light"></i>
+                    </span>
                   </div>
                 </div>
               </div>
@@ -179,7 +192,6 @@ const CartItem: FC<{ item: ICartItem }> = ({item}) => {
       </div>
     </div>
   )
-
 };
 
 export default Cart;
