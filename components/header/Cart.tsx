@@ -82,8 +82,8 @@ const CartContent = () => {
           </div>
         </div>
         <div className="mini-cart__buttons">
-          <a href="https://rc.israelcart.com/checkout/" className="button mini-cart__checkout-button ripple">
-            Continue to Checkout</a>
+          <Link href="/checkout" onClick={closeCart} className="button mini-cart__checkout-button ripple">
+            Continue to Checkout</Link>
         </div>
       </div>
 

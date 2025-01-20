@@ -141,6 +141,7 @@ const useCart = create<CartState>()(
         }
 
         const cartData: Response = await response.json();
+        console.log(cartData)
 
         const updateData = {
           items: cartData.items,
