@@ -30,6 +30,7 @@ const ContactInfoStep: FC = () => {
   useEffect(() => {
     // Set default values to react-hook-form fields
     const {shipping} = contactInfo;
+    console.log(shipping)
     setValue('billing_email', shipping.email);
     setValue('shipping_first_name', shipping.firstName);
     setValue('shipping_last_name', shipping.lastName);
@@ -38,6 +39,8 @@ const ContactInfoStep: FC = () => {
     setValue('billing_phone', shipping.phone);
     setValue('country', shipping.country);
     setValue('address', shipping.address);
+    setValue('state', shipping.state);
+    setValue('terms', shipping.terms);
 
     if (shipping.country.value) {
       const countryStates = countriesStatesData[contactInfo.shipping.country.value];
@@ -56,6 +59,7 @@ const ContactInfoStep: FC = () => {
     setValue,
     control,
     formState: {errors},
+    watch,
   } = useForm<FormValues>();
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
@@ -69,6 +73,7 @@ const ContactInfoStep: FC = () => {
       state: data.state,
       postcode: data.shipping_postcode,
       phone: data.billing_phone,
+      terms: data.terms,
     });
     calculateCheckout();
     loadShippingMethods();
@@ -97,7 +102,7 @@ const ContactInfoStep: FC = () => {
                   message: 'Email is incorrect',
                 },
               })}
-              className={`filled ${errors.billing_email ? 'error' : ''}`}
+              className={`${errors.billing_email ? 'error' : ''} ${watch("billing_email") ? 'filled' : ''}`}
             />
             <label htmlFor="billing_email">E-mail</label>
             {errors.billing_email && (
@@ -119,7 +124,7 @@ const ContactInfoStep: FC = () => {
                 {...register('shipping_first_name', {
                   required: 'First name is required',
                 })}
-                className={`filled ${errors.shipping_first_name ? 'error' : ''}`}
+                className={`${errors.shipping_first_name ? 'error' : ''}  ${watch("shipping_first_name") ? 'filled' : ''}`}
               />
               <label htmlFor="shipping_first_name">First name</label>
               {errors.shipping_first_name && (
@@ -136,7 +141,7 @@ const ContactInfoStep: FC = () => {
                 {...register('shipping_last_name', {
                   required: 'Last name is required',
                 })}
-                className={`filled ${errors.shipping_last_name ? 'error' : ''}`}
+                className={`${errors.shipping_last_name ? 'error' : ''} ${watch("shipping_last_name") ? 'filled' : ''}`}
               />
               <label htmlFor="shipping_last_name">Last name</label>
               {errors.shipping_last_name && (
@@ -160,12 +165,20 @@ const ContactInfoStep: FC = () => {
                   onChange={(selected) => {
                     const countryStates = countriesStatesData[selected.value];
                     const preparedStates = countryStates
-                      ? Object.entries(countryStates).map(([value, label]) => ({value, label}))
+                      ? Object.entries(countryStates).map(([value, label]) => ({
+                        value,
+                        label: JSON.parse(`"${label}"`),
+                      }))
                       : [];
+
                     setStates(preparedStates);
                     setValue('state', '');
                     field.onChange(selected);
                   }}
+                  styles={{
+                    container: styles => ({...styles, fontWeight: 600}),
+                  }}
+
                   className={['checkout-select', errors.country ? 'error' : ''].join(' ')}
                 />
               )}
@@ -182,7 +195,7 @@ const ContactInfoStep: FC = () => {
               {...register('shipping_city', {
                 required: 'City is required',
               })}
-              className={`filled ${errors.shipping_city ? 'error' : ''}`}
+              className={`${errors.shipping_city ? 'error' : ''} ${watch("shipping_city") ? 'filled' : ''}`}
             />
             <label htmlFor="shipping_city">City / town</label>
             {errors.shipping_city && (
@@ -198,7 +211,7 @@ const ContactInfoStep: FC = () => {
               {...register('address', {
                 required: 'Address is required',
               })}
-              className={`filled ${errors.address ? 'error' : ''}`}
+              className={`${errors.address ? 'error' : ''} ${watch("address") ? 'filled' : ''}`}
             />
             <label htmlFor="shipping_city">Address</label>
             {errors.address && (
@@ -216,13 +229,14 @@ const ContactInfoStep: FC = () => {
                   control={control}
                   rules={{required: 'State is required'}}
                   render={({field}) => (
-
                     <Select
                       {...field}
                       placeholder={'State'}
                       options={states}
                       className={['checkout-select', errors.country ? 'error' : ''].join(' ')}
-
+                      styles={{
+                        container: styles => ({...styles, fontWeight: 600}),
+                      }}
                     />
                   )}
                 />
@@ -235,7 +249,7 @@ const ContactInfoStep: FC = () => {
                     {...register('state', {
                       required: 'State is required',
                     })}
-                    className={`filled ${errors.state ? 'error' : ''}`}
+                    className={`${errors.state ? 'error' : ''} ${watch("state") ? 'filled' : ''}`}
                   />
                   <label htmlFor="shipping_postcode">State</label>
                 </>
@@ -253,7 +267,7 @@ const ContactInfoStep: FC = () => {
                 {...register('shipping_postcode', {
                   required: 'Postcode / ZIP is required',
                 })}
-                className={`filled ${errors.shipping_postcode ? 'error' : ''}`}
+                className={`${errors.shipping_postcode ? 'error' : ''}  ${watch("shipping_postcode") ? 'filled' : ''}`}
               />
               <label htmlFor="shipping_postcode">Postcode / ZIP</label>
               {errors.shipping_postcode && (
@@ -271,7 +285,7 @@ const ContactInfoStep: FC = () => {
               {...register('billing_phone', {
                 required: 'Phone is required',
               })}
-              className={`filled ${errors.billing_phone ? 'error' : ''}`}
+              className={`${errors.billing_phone ? 'error' : ''}  ${watch("billing_phone") ? 'filled' : ''}`}
             />
             <label htmlFor="billing_phone">Phone number</label>
             {errors.billing_phone && (
@@ -300,7 +314,7 @@ const ContactInfoStep: FC = () => {
               {...register('terms', {
                 required: 'You must accept the terms',
               })}
-              className={`filled ${errors.terms ? 'error' : ''}`}
+              className={`${errors.terms ? 'error' : ''}`}
             />
             <div className="checkmark"></div>
             <div className="checkbox-label">

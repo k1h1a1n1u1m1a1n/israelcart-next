@@ -749,7 +749,6 @@
   }
 
   .form__field input:not([type=checkbox]):focus,
-  .form__field input:not([type=checkbox]):valid,
   .form__field input:not([type=checkbox]).filled,
   .form__field textarea:focus,
   .form__field textarea.filled {
@@ -757,7 +756,6 @@
   }
 
   .form__field input:not([type=checkbox]):focus + label,
-  .form__field input:not([type=checkbox]):valid + label,
   .form__field input:not([type=checkbox]).filled + label,
   .form__field textarea:focus + label,
   .form__field textarea.filled + label {

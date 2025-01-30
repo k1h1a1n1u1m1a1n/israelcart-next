@@ -1,18 +1,17 @@
-import {FC, useEffect, useState} from 'react'
+import {FC, useEffect} from 'react'
 import useCart from "@/hooks/useCart";
 import Link from "next/link";
 import Image from "next/image";
 import useCheckout from "@/hooks/useCheckout";
 import ContentLoader from "react-content-loader";
+import Coupon from "@/components/checkout/summary/CouponForm";
+import CouponForm from "@/components/checkout/summary/CouponForm";
 
 const Summary: FC = () => {
   const {items} = useCart();
-  const {applyCoupon} = useCheckout();
-  const [couponFormValue, setCouponFormValue] = useState('');
 
   return (
     <div className={'checkout__column-cart__content'}>
-
       <div className="checkout-summary">
         <div className="summary__title display-desktop">
           Items in cart ({items.length})
@@ -45,28 +44,7 @@ const Summary: FC = () => {
           ))}
         </div>
       </div>
-
-      <div className="checkout-coupon">
-        <form onSubmit={(event) => {
-          event.preventDefault();
-          applyCoupon(couponFormValue);
-        }}>
-          <div className="coupon__wrapper">
-            <input type="text"
-                   value={couponFormValue}
-                   onChange={(e) => setCouponFormValue(e.target.value)}
-                   className="coupon__input"
-                   placeholder="Apply a discount code"
-                   autoComplete="off"
-            />
-            <button className="coupon__button">
-              Apply
-            </button>
-          </div>
-        </form>
-      </div>
-
-
+      <CouponForm/>
       <Totals/>
     </div>
   );
@@ -118,21 +96,29 @@ const Totals: FC = () => {
         )
       }
       {
-        coupon.discount > 0 && (
+        coupon.code.length > 0 && (
           <div className="checkout-totals__item checkout__coupon-info">
             <div className="checkout-totals__title">
               Promo code <span className="coupon-code display-desktop">{coupon.code}</span>
               <i className="lh-icon-trash-light" onClick={removeCoupon}></i>
               <div className="coupon-code display-mobile">{coupon.code}</div>
             </div>
-            <div className="checkout-totals__price">
-              {isCalculating ? (<TotalsSkeleton/>) : (
-                <>
-                  <span className="woocommerce-Price-currencySymbol">$</span>
-                  <span className="price_amount">{coupon.discount}</span>
-                </>
-              )}
-            </div>
+            {
+              coupon.discount > 0 || isCalculating ? (
+                <div className="checkout-totals__price">
+                  {isCalculating ? (<TotalsSkeleton/>) : (
+                    <>
+                      <span className="woocommerce-Price-currencySymbol">$</span>
+                      <span className="price_amount">{coupon.discount}</span>
+                    </>
+                  )}
+                </div>
+              ) : (
+                <div>
+                  Discount not applied
+                </div>
+              )
+            }
           </div>
         )
       }

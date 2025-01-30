@@ -16,6 +16,7 @@ type CheckoutStore = {
       state: { label: string, value: string } | string;
       postcode: string;
       phone: string;
+      terms: boolean;
     },
     billing: {
       address: string;
@@ -71,6 +72,7 @@ const useCheckout = create<CheckoutStore>()(
           state: '',
           postcode: '',
           phone: '',
+          terms: false,
         },
         billing: {
           address: '',
