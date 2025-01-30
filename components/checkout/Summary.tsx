@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import useCheckout from "@/hooks/useCheckout";
 import ContentLoader from "react-content-loader";
-import Coupon from "@/components/checkout/summary/CouponForm";
 import CouponForm from "@/components/checkout/summary/CouponForm";
 
 const Summary: FC = () => {
