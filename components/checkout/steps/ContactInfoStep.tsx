@@ -30,7 +30,7 @@ const ContactInfoStep: FC = () => {
   useEffect(() => {
     // Set default values to react-hook-form fields
     const {shipping} = contactInfo;
-    console.log(shipping)
+    console.log('contactInfo', contactInfo);
     setValue('billing_email', shipping.email);
     setValue('shipping_first_name', shipping.firstName);
     setValue('shipping_last_name', shipping.lastName);
@@ -42,13 +42,16 @@ const ContactInfoStep: FC = () => {
     setValue('state', shipping.state);
     setValue('terms', shipping.terms);
 
-    if (shipping.country.value) {
-      const countryStates = countriesStatesData[contactInfo.shipping.country.value];
-      const preparedStates = countryStates
-        ? Object.entries(countryStates).map(([value, label]) => ({value, label}))
-        : [];
-      setStates(preparedStates);
+
+    if (!shipping.country.value) {
+      setValue('country', {value: 'US', label: 'United States (US)'})
     }
+
+    const countryStates = countriesStatesData[contactInfo.shipping.country.value || 'US'];
+    const preparedStates = countryStates
+      ? Object.entries(countryStates).map(([value, label]) => ({value, label}))
+      : [];
+    setStates(preparedStates);
 
     setValue('state', shipping.state);
   }, [contactInfo.shipping]);
