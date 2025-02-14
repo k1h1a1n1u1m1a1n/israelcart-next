@@ -18,6 +18,8 @@
     "react-hook-form": "^7.54.1",
     "react-scroll-snap-anime-slider": "^1.5.3",
     "react-select": "^5.9.0",
+    "sharp": "^0.33.5",
+    "swr": "^2.3.2",
     "zustand": "^5.0.2"
   },
   "devDependencies": {

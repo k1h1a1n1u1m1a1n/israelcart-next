@@ -18,6 +18,7 @@ export default function Gallery({images}: { images: string[] }) {
                 >
                   <Image
                     priority={index === 0}
+
                     src={slide} alt={'Product slide'} width={547} height={358}/>
                 </Slide>
               ))}

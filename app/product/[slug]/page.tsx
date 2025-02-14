@@ -2,11 +2,12 @@ import React from 'react';
 import '../single-product.css'
 import Breadcrumbs from "@/components/single-product/Breadcrumbs";
 import Link from "next/link";
-import RecommendedProductsSlider from "@/components/common/recommended-products-slider/RecommendedProductsSlider";
-import {IProduct, IProductSimple} from "@/types/data";
+import {IProduct} from "@/types/data";
 import Gallery from "@/components/single-product/Gallery";
 import Image from "next/image";
 import AddToCard from "@/components/common/AddToCard";
+import RecommendedProducts from "@/components/single-product/RecommendedProducts";
+import StickyCard from "@/components/single-product/StickyCard";
 
 
 async function getProduct(slug: string) {
@@ -15,11 +16,6 @@ async function getProduct(slug: string) {
   return product
 }
 
-async function getRelatedProducts(slug: string) {
-  const res = await fetch('https://rc.israelcart.com/wp-json/next/get-related-products?slug=' + slug);
-  const products: IProductSimple[] = await res.json()
-  return products
-}
 
 export async function generateStaticParams() {
   const posts = await fetch('https://rc.israelcart.com/wp-json/next/get-all-products-slugs').then((res) => res.json())
@@ -30,7 +26,6 @@ export async function generateStaticParams() {
 export default async function SingleProduct({params,}: { params: Promise<{ slug: string }> }) {
   const slug = (await params).slug
   const product: IProduct = await getProduct(slug);
-  const relatedProducts: IProductSimple[] = await getRelatedProducts(slug);
 
   const simpleProduct = {
     slug: product.slug,
@@ -480,41 +475,10 @@ export default async function SingleProduct({params,}: { params: Promise<{ slug:
               </div>
             </div>
           </div>
-          <div className="single_product__sticky_card_wrap stick-bottom" data-sticky-card=""
-               style={{paddingTop: '12px'}}>
-            <div className="single_product__sticky_card">
-              <div className="thumbnail_wrap ">
-                <Image src={product.image} width={356} height={265} alt={product.title}/>
-              </div>
-              <div className="title">{product.title}</div>
-              <div className="info__price" data-product_id="20230">
-                <div className="regular_price"><span className="woocommerce-Price-currencySymbol">$</span><span
-                  className="price_amount" data-js-price_amount="">{product.price}</span></div>
-              </div>
-              <div className="product__buy_block" data-product-list-name="Product page"
-                   data-product-list-id="product_page">
-                <div className="product__add_to_cart_wrap">
-                  <AddToCard quantitySide={'left'} product={simpleProduct}/>
-
-                  <div className="item__wishlist_wrap">
-                    <div className="product_add_to_favorite">
-                      <button data-favorite_list-disable="" data-favorite_list-added="0" data-type="favorites"
-                              data-ga4-type="type_add_to_wishlist">
-                        <div className="button__icon icon__add"><i className="lh-icon-heart-regular"></i></div>
-                      </button>
-                      <div className="button__popup tooltip-shift_bottom tooltip-shift_left">You are not logged in, so
-                        you cannot add items to your favorites list
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
+          <StickyCard product={product} simpleProduct={simpleProduct}/>
         </div>
       </div>
-      <RecommendedProductsSlider title={'You might also like'} products={relatedProducts}/>
+      <RecommendedProducts slug={slug}/>
 
       <div className="single_product__producer">
         <div className="single_product__green_handle">Meet the Producer</div>

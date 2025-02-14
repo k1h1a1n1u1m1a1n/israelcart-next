@@ -1,27 +1,32 @@
-import {IProductSimple} from "@/types/data";
+"use client";
+
+import useSWR from "swr";
+import { IProductSimple } from "@/types/data";
 import Tabs from "@/components/common/featured-products/Tabs";
 
-async function getRecommendedProducts() {
-  const response = await fetch('https://rc.israelcart.com/wp-json/next/get-featured-products');
-  const products: IProductSimple[] = await response.json();
-  return products;
-}
+const fetcher = async (url: string) => {
+  const response = await fetch(url);
+  if (!response.ok) throw new Error("Failed to fetch");
+  return response.json();
+};
 
-const FeaturedProducts = async () => {
-  const recommendedProducts = await getRecommendedProducts();
+const FeaturedProducts = () => {
+  const { data: recommendedProducts, error } = useSWR<IProductSimple[]>(
+    "https://rc.israelcart.com/wp-json/next/get-featured-products",
+    fetcher
+  );
 
   return (
     <div className="featured_products">
       <div className="col-full">
         <div className="featured_products__inner">
-          <div className="block_title">
-            Featured products
-          </div>
-          <Tabs recommendedProducts={recommendedProducts}/>
+          <div className="block_title">Featured products</div>
+          {error && <p>Failed to load products.</p>}
+          {!recommendedProducts ? <p>Loading...</p> : <Tabs recommendedProducts={recommendedProducts} />}
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default FeaturedProducts;

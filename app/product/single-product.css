@@ -39,7 +39,6 @@
      .single_product__main .single_product__main-right {
         width: 44%;
         min-width: 300px;
-        overflow: hidden;
     }
 }
 @media print {
@@ -2876,21 +2875,28 @@
     border-color: #5299F7;
 }
  .single_product__sticky_card_wrap {
-    position: fixed;
     z-index: 1;
-    top: 0;
     padding-top: 120px;
     transition: all 0.2s ease-in-out 0ms;
+     animation: fadeIn 0.5s;
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
  .single_product__sticky_card_wrap.hide {
     opacity: 0;
     visibility: hidden;
     display: none;
 }
- .single_product__sticky_card_wrap.stick-bottom {
-    position: absolute;
-    bottom: 0;
-    top: unset;
+ .single_product__sticky_card_wrap {
+     position: sticky;
+     top: 100px;
+     bottom: unset;
 }
 @media screen and (max-width: 968px) {
      .single_product__sticky_card_wrap {
