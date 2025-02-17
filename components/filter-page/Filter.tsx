@@ -3,7 +3,6 @@
 import {FC} from 'react'
 import Link from "next/link";
 
-
 const Filter: FC = () => {
   return (
     <div className="lh_loop_page__aside lh_loop_filters__mobile_popup__wrap" data-loop-page-ajax-wrap="form">
@@ -31,9 +30,9 @@ const Filter: FC = () => {
                       <i className="default"
                          style={{backgroundImage: 'url(https://www.israelcart.com/wp-content/uploads/2022/02/jewerly.svg)'}}></i>
                       <i className="hover"
-                         style={{backgroundImage: 'url(https://www.israelcart.com/wp-content/uploads/2022/02/jewerly-hover.svg)'}}></i><a
-                      href="https://www.israelcart.com/product-category/jewelry/" data-name="Jewelry"
-                      data-categories-item-id="1255"> Jewelry <span className="count">(34)</span></a></div>
+                         style={{backgroundImage: 'url(https://www.israelcart.com/wp-content/uploads/2022/02/jewerly-hover.svg)'}}></i><Link
+                      href="/product-category/jewelry/"
+                      data-categories-item-id="1255"> Jewelry <span className="count">(34)</span></Link></div>
                   </li>
                   <li className="widget__items_control " data-filter-category="1237">
                     <div className="items__item_label custom_icon"><i className="default"
@@ -52,7 +51,7 @@ const Filter: FC = () => {
                       <Link href="/product-category/home/" data-name="Home"
                       data-categories-item-id="1220"> Home <span className="count">(28)</span></Link></div>
                   </li>
-                  <li className="widget__items_control current" data-filter-category="3882">
+                  <li className="widget__items_control" data-filter-category="3882">
                     <div className="items__item_label"><Link
                       href="/product-category/rosh-hashanah-cocmetics/"
                       data-name="Rosh hashanah cosmetics" data-categories-item-id="3882"> Rosh hashanah
@@ -159,7 +158,6 @@ const Filter: FC = () => {
         </div>
       </div>
     </div>
-
   );
 };
 
